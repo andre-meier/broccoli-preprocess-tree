@@ -1,6 +1,6 @@
 {
   "name": "broccoli-preprocess-tree",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Preprocess HTML, JavaScript, and other files with directives based off custom or ENV configuration",
   "main": "index.js",
   "repository": {
@@ -19,5 +19,10 @@
     "glob": "^5.0.10",
     "lodash-node": "^3.9.3",
     "preprocess": "^2.1.1"
-  }
+  },
+  "keywords": [
+    "broccoli",
+    "broccoli-plugin",
+    "livereload"
+  ]
 }
