@@ -1,7 +1,9 @@
 var Writer = require('broccoli-writer');
 var fs = require('fs-extra');
+var copyDereferenceSync = require('copy-dereference').sync;
 var preprocess = require('preprocess');
 var glob = require('glob');
+var path = require('path');
 var _ = require('lodash-node');
 
 function PreprocessFilter(inputTree, options) {
@@ -21,7 +23,6 @@ PreprocessFilter.prototype.write = function (readTree, destDir) {
   var self = this;
 
   return readTree(self.inputTree).then(function (srcDir) {
-    fs.copySync(srcDir, destDir);
 
     var files = glob.sync('**/*.*', {
       cwd: srcDir,
@@ -29,7 +30,11 @@ PreprocessFilter.prototype.write = function (readTree, destDir) {
     });
 
     _.forEach(files, function (file) {
-      preprocess.preprocessFileSync(destDir + '/' + file, destDir + '/' + file, self.options.context);
+      var filename = destDir + '/' + file;
+      fs.ensureDirSync(path.dirname(filename));
+      copyDereferenceSync(srcDir + '/' + file, filename);
+
+      preprocess.preprocessFileSync(filename, filename, self.options.context);
     });
   });
 };
