@@ -1,6 +1,6 @@
 {
   "name": "broccoli-preprocess-tree",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Preprocess HTML, JavaScript, and other files with directives based off custom or ENV configuration",
   "main": "index.js",
   "repository": {
@@ -18,7 +18,8 @@
     "fs-extra": "^0.18.4",
     "glob": "^5.0.10",
     "lodash-node": "^3.9.3",
-    "preprocess": "^2.1.1"
+    "preprocess": "^2.1.1",
+    "copy-dereference": "^1.0.0"
   },
   "keywords": [
     "broccoli",
