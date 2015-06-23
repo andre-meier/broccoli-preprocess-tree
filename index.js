@@ -13,11 +13,21 @@ function PreprocessFilter(inputTree, options) {
 
   this.options = options || {};
   this.options.context = this.options.context || {};
+  this.options.extensions = this.options.extensions || ['html', 'js', 'css'];
   this.inputTree = inputTree;
 }
 
 PreprocessFilter.prototype = Object.create(Writer.prototype);
 PreprocessFilter.prototype.constructor = PreprocessFilter;
+
+PreprocessFilter.prototype.getFileExtension = function (filename) {
+  var result = path.extname(filename);
+  if (result.length> 0) {
+    result = result.substr(1, result.length);
+  }
+
+  return result;
+};
 
 PreprocessFilter.prototype.write = function (readTree, destDir) {
   var self = this;
@@ -34,7 +44,12 @@ PreprocessFilter.prototype.write = function (readTree, destDir) {
       fs.ensureDirSync(path.dirname(filename));
       copyDereferenceSync(srcDir + '/' + file, filename);
 
-      preprocess.preprocessFileSync(filename, filename, self.options.context);
+      var extname = self.getFileExtension(filename);
+
+      if (self.options.extensions.indexOf(extname) > -1) {
+        preprocess.preprocessFileSync(filename, filename, self.options.context);
+      }
+
     });
   });
 };
